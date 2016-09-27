@@ -1,0 +1,49 @@
+// HEADER
+#mainheader {
+  #sub_nav {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 60px;
+    -webkit-transition: all .3s ease 0s;
+    -o-transition: all .3s ease 0s;
+    transition: all .3s ease 0s;
+  }
+  &.ridotto {
+    #sub_nav {
+      height: 0;
+      overflow: hidden;
+    }
+  }
+}
+
+
+// SUB NAV
+.sub_nav {
+  display: block;
+  padding: 17px 0 18px;
+  margin: 0;
+  text-align: center;
+  li {
+    display: inline-block;
+    padding: 0 48px;
+    margin: 0;
+    font-size: 1.18em;
+    font-weight: 300;
+    line-height: 21px;
+  }
+}
+
+
+// MEDIA
+/* < 992px */
+  .sub_nav {
+    display: block;
+    padding: 5px 0;
+    margin: 0;
+    li {
+      font-size: 1em;
+      line-height: 21px;
+    }
+  }

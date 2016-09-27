@@ -1,0 +1,137 @@
+<html>
+  <head>
+    <title>Appunti</title>
+    <link rel="stylesheet" href="documentazione.css">
+  </head>
+  <body>
+  <h1>Basic Template</h1>
+  
+  <h2>Compatibilità browser (User Agent)</h2> 
+  <pre>&lt;meta http-equiv="X-UA-Compatible" content="IE=edge,<span class="sardegna">chrome=1</span>"&gt;</pre>
+  <p>
+  <code>http-equiv="X-UA-Compatible"</code> induce Internet Explorer ad eseguire il rendering della pagina come farebbe una certa versione del browser.<br/>
+  Es.: <strong>content="IE=7"</strong> (nota: che è diverso da <strong>"IE=EmulateIE7"</strong>)
+  </p>
+  <p>
+  <code>"IE=edge"</code> dice a Internet Explorer di usare <em>la più alta modalità disponibile</em> (cioè quella la versione del browser in esecuzione).
+  </p>
+  <p class="sardegna">
+  <code>"chrome=1"</code> specifica che Google Chrome Frame dovrebbe partire se l'utente lo ha installato.<br/>
+  Su Windows XP, Internet Explorer è bloccato alla versione 8, dato che Microsoft non ha rilasciato più aggiornamenti per questo sistema operativo.<br/>
+  Per risolvere il problema Google ha creato <em>Chrome Frame</em>, un plug-in che funziona con Internet Explorer 6, 7, 8 e 9, e consente la visualizzazione delle pagine web utilizzando il motore di rendering e il motore JavaScript di Chrome.<br/>
+  Google però ha interrotto lo sviluppo di Chrome Frame e cessato il supporto a gennaio 2014.<br/>
+  Inoltre il <a href="https://validator.w3.org/">W3C validator</a>, specificando <em>"chrome=1" dà errore</em>.
+    </p>
+  <p>
+  Riferimenti:
+  <ol>
+    <li><a href="https://msdn.microsoft.com/it-it/library/cc817570.aspx">http-equiv="X-UA-Compatible"</a>
+    <li><a href="http://stackoverflow.com/questions/6771258/what-does-meta-http-equiv-x-ua-compatible-content-ie-edge-do">content="IE=edge"</a></li>
+    <li><a href="http://stackoverflow.com/questions/22059060/is-it-still-valid-to-use-ie-edge-chrome-1">"chrome=1"</a>
+    <li><a href="https://it.wikipedia.org/wiki/Google_Chrome_Frame">Google Chrome Frame</a>
+  </ol>
+  </p>
+
+  <p>
+  Nel <em>body</em> il sito dell'AGID pone un'avviso che compare in caso il browser sia Internet Explorer di versione inferiore alla 8, che invita all'aggiornamento.
+  </p>
+  <pre class="italia">
+  &lt;!--[if lt IE 8]&gt;
+    &lt;p class="browserupgrade"&gt;Versioni di Explorer inferiori alla 8 non sono supportate.
+    Puoi effettuare un &lt;a href="http://browsehappy.com/"&gt; aggiornamento del browser &lt;/a&gt; per visualizzare correttamente il sito.&lt;/p&gt;
+  &lt;![endif]--&gt;</pre>  
+
+  
+  <h2>Impostazione larghezza pagina (viewport)</h2>
+  <pre>&lt;meta name="viewport" content="width=device-width, initial-scale=1, <span class="sardegna">maximum-scale=1.0, user-scalable=no</span>"&gt;</pre>
+  <p>
+  <code>width=device-width</code> imposta la larghezza della pagina uguale a quella dello schermo<br/>
+  <code>initial-scale=1</code> imposta lo zoom a 1<br/>  
+  Le due impostazioni sono utili soprattutto per smartphone e tablet.
+  </p>
+  <p class="sardegna">
+  <code>user-scalable=no</code> e <code>maximum-scale=1.0</code> Non dovrebbe esserci bisogno di usarli nelle pagine responsive. Se il design è responsivo e la pagina si scompone zoomando, significa che la pagina è costruita male.<br/>
+  Inoltre, per l'accessibilità, l'impedire lo zoom può creare difficoltà a chi ha problemi di vista.<br/>
+  </p>
+  <p>
+  Riferimenti:
+  <ol>
+    <li><a href="http://stackoverflow.com/questions/22354435/to-user-scalable-no-or-not-to-user-scalable-no">To “user-scalable=no” or not.</a>
+  </ol>
+  </p>
+  
+  <h1>Header</h1>
+  
+  <h2>Cambiamento dimensioni header quando si scorre la pagina</h2>
+  <pre>
+  $(window).on("scroll touchmove", function () {
+    $('#mainheader').toggleClass('ridotto', $(document).scrollTop() > 32);
+    $('body').toggleClass('ridotto', $(document).scrollTop() > 32);
+    $('#topcontrol').toggleClass('visualizza', $(document).scrollTop() > 200);
+  });</pre>
+  
+  Il metodo JQuery <code>toggleClass()</code> aggiunge e rimuove alternativamente uno o più nomi classe dagli elementi selezionati.<br/>
+  In questo caso a <code>#mainheader</code> e <code>body</code> aggiunge il nome classe <code>ridotto</code> cui nel css sono legate:
+  <ol>
+  <li>la <code>height</code> del <em>#mainheader</em> (oltre a una serie di altre caratteristiche del <kbd>#mainheader</kbd>)</li>
+  <li>il <code>padding-top</code> del <em>body</em></li>
+  </ol>
+  Il secondo parametro del metodo <kbd>toggleClass()</kbd> è un booleano che pecifica se il nome classe del primo parametro va aggiunto o tolto.<br/>
+  In questo caso il valore <kbd>true</kbd> o <kbd>false</kbd> dipende dalla funzione JQuery <code>scrollTop()</code> che restituisce la posizione della scrollbar verticale dell'elemento selezionato (qui <em>document</em>).
+  <p>
+  Sempre per <em>#mainheader</em> è inoltre specificato nel css, <code>transition: all .3s ease 0s;</code><br/>
+  cioè:
+  <pre>
+  transition-property: all;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+  transition-delay: 0s;</pre>
+  che dà l'effetto di passaggio graduale da una dimensione all'altra.
+  </p>
+  
+  <pre>
+  colori
+  rosso   verde
+  bd171c  2e7123  scuro
+  d71920  398b2b  chiaro
+  921116  124615  hoover icona facebook
+  f5e9e9  e9f5e9  sfondo voci 2° livello menu verticale
+  eb5257  609f55  sfondo cerca mobile
+  ff8c00  22ff00  focus logo
+
+  fascia
+    -rosso
+    -white
+    -grey
+    -dark-gray
+  </pre>
+  <ul>
+  <li>MAIN</li>
+  <li>FONT & TEXT</li>
+  <li>HOMEPAGE</li>
+  <li>ARTICOLO</li>
+  <li>HEADER</li>
+  <li>BREADCRUMPS</li>
+  <li>PAGINATION</li>
+  <li>LISTE</li>
+  <li>SEZIONI</li>
+  <li>SUB NAV</li>
+  <li>ELEMENTI</li>
+  <li>ROUNDEX BOX</li>
+  <li>QUESTIONARIO</li>
+  <li>SEZIONI PANNELLI
+  <li>SIDEBAR</li>
+  <li>SHARE BUTTONS</li>
+  <li>REVEAL CONTAINER</li>
+  <li>MEDIA</li>
+  <li>FEED BACK FORM</li>
+  <li>GALLERIA</li>
+  <li>ARTICOLI</li>
+  <li>NAV STACKED</li>
+  <li>SLICK</li>
+  <li>LAYOUT BOOTSTRAP</li>
+  <li>LAYOUT BOOTSTRAP MEDIA</li>
+  </ul>
+  
+  </body>
+</html>
